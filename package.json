@@ -4,7 +4,8 @@
   "description": "A JSON API backend to manage Georgia Tech's SGA IT Committee's project backlog.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start" : "node server.js",
+    "dev-start": "mongod && node server.js"
   },
   "engines": {
     "node": "0.12.7"
