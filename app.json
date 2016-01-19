@@ -4,5 +4,6 @@
   "repository": "https://github.com/akeaswaran/cfb-scoreboard-api",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["georgia tech", "gt", "todo"],
-  "image": "heroku/nodejs"
+  "image": "heroku/nodejs",
+  "addons": ["mongolab"]
 }
