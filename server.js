@@ -2,7 +2,7 @@ var express = require('express'),
 mongoose = require('mongoose'),
 fs = require('fs');
 
-var uristring =
+var mongoUri =
     process.env.MONGOLAB_URI ||
     'mongodb://localhost/gtsga-projectqueue';
 mongoose.connect(mongoUri);
