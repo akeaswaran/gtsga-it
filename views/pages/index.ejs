@@ -41,7 +41,7 @@
 					console.log(errorThrown);
 				},
 				success : function (data, textStatus, jqXHR) {
-					var card = data;
+					var card = JSON.parse(data);
 					$('#card-' + card.id).remove();
 				}
 			}).done(function(data) {
@@ -77,7 +77,7 @@
 			},
 			success : function (data, textStatus, jqXHR) {
 				console.log('CREATING HTML CARD');
-				var card = data;
+				var card = JSON.parse(data);
 				createCard(card);
 	      $('#card-title').val('');
 	      $('#card-description').val('');
