@@ -137,7 +137,7 @@
     $('#saveButton').on('click', function(event) {
 			event.preventDefault();
       $('#newCardModal').modal('toggle');
-			var card = {'title' : 'IT-' + numCards + ': ' + $('#card-title').val(), 'description' : $('#card-description').val()};
+			var card = {'[0].Key' : 'title', '[0].Value' : 'IT-' + numCards + ': ' + $('#card-title').val(),'[1].Key' : 'description', '[1].Value' : $('#card-description').val()};
 			addCard(card);
     });
   });
