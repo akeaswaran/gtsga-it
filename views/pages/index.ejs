@@ -139,11 +139,20 @@ function createCard(card) {
 	var assignees = card.assignees;
 	var emails = card.assigneeEmails;
 	var assigneeString = 'assigned to <a href=\"mailto:' + card.assigneeEmails[0] + '\">' + card.assignees[0] + '</a>';
-	if (assignees.length > 1) {
+	if (assignees.length > 2) {
 		for (var i = 1; i < assignees.length; i++) {
-			assigneeString += ', <a href=\"mailto:' + card.assigneeEmails[i] + '\">' + card.assignees[i] + '</a>';
+			var addAssignee = ', <a href=\"mailto:' + card.assigneeEmails[i] + '\">' + card.assignees[i] + '</a>';
+			if (i === assignees.length - 1) {
+				addAssignee = ', and <a href=\"mailto:' + card.assigneeEmails[i] + '\">' + card.assignees[i] + '</a>';
+			}
+			assigneeString += addAssignee;
 		}
+	} else if (assignees.length === 2) {
+		assigneeString += ' and <a href=\"mailto:' + card.assigneeEmails[1] + '\">' + card.assignees[1] + '</a>';
+	} else {
+		assigneeString = 'assigned to <a href=\"mailto:' + card.assigneeEmails[0] + '\">' + card.assignees[0] + '</a>';
 	}
+
 	var cardHtml = '<div id="card-' + card._id + '" class="panel panel-info card backlog"><div class="panel-heading">' + card.title + '<button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><p>' + card.description + '</p></div><div class="panel-footer">' + assigneeString + '</div></div>';
 	$('#backlogWell').append(cardHtml);
 	$('.card').draggable({
