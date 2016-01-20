@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="">
+  <meta name="description" content="A simple web app to manage Georgia Tech's SGA IT Committee's project backlog.">
   <meta name="author" content="Akshay Easwaran">
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="lib/jquery-ui/jquery-ui.min.css">
@@ -43,12 +43,14 @@
                <textarea class="form-control" id="card-description" minlength="1" placeholder="Description" required></textarea>
              </div>
 						 <div class="form-group">
-               <label for="card-author" class="control-label">Author</label>
-               <input type="text" class="form-control" id="card-author" minlength="1" placeholder="George P. Burdell" required>
+               <label for="card-assignee" class="control-label">Assignees</label>
+               <input type="text" class="form-control" id="card-assignee" minlength="1" placeholder="George P. Burdell" required>
+							 <p class="help-block">Include a comma-separated list of those who are working on this card.</p>
              </div>
 						 <div class="form-group">
-               <label for="card-authoremail" class="control-label">Author Email</label>
-               <input type="email" class="form-control" id="card-authoremail" placeholder="gpb27@gatech.edu" required>
+               <label for="card-assigneeemail" class="control-label">Assignee Emails</label>
+               <input type="email" class="form-control" id="card-assigneeemail" placeholder="gpb27@gatech.edu" required>
+							 <p class="help-block">Include a comma-separated list of the emails of those who are working on this card.</p>
              </div>
            </form>
           </div>
@@ -99,7 +101,7 @@
 	<footer class="bd-footer text-muted" style="text-align:center;padding-bottom:20px;" role="contentinfo">
 		<div class="container">
 			<p>Built by <a id="github" href="https://github.com/akeaswaran">@akeaswaran</a>.</p>
-			<p>Currently v0.0.2. Code licensed <a id="license" href="https://github.com/akeaswaran/gtsga-it/blob/master/LICENSE.md">MIT</a>.</p>
+			<p>Currently v0.0.3. Code licensed <a id="license" href="https://github.com/akeaswaran/gtsga-it/blob/master/LICENSE.md">MIT</a>.</p>
 			<a href="#top" style="text-align:right;">Back to top</a>
 		</div>
 	</footer>
@@ -134,7 +136,15 @@ function deleteCard(cardId) {
 function createCard(card) {
 	console.log('CARD: ' + JSON.stringify(card));
 	var deleteString = 'deleteCard(\'' + card._id + '\')';
-	var cardHtml = '<div id="card-' + card._id + '" class="panel panel-info card backlog"><div class="panel-heading">' + card.title + '<button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><p>' + card.description + '</p></div><div class="panel-footer">created by <a href=\"mailto:' + card.authorEmail + '\">' + card.author + '</a></div></div>';
+	var assignees = card.assignees;
+	var emails = card.assigneeEmails;
+	var assigneeString = 'assigned to <a href=\"mailto:' + card.assigneeEmails[0] + '\">' + card.assignees[0] + '</a>';
+	if (assignees.length > 1) {
+		for (var i = 1; i < assignees.length; i++) {
+			assigneeString += ', <a href=\"mailto:' + card.assigneeEmails[i] + '\">' + card.assignees[i] + '</a>';
+		}
+	}
+	var cardHtml = '<div id="card-' + card._id + '" class="panel panel-info card backlog"><div class="panel-heading">' + card.title + '<button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><p>' + card.description + '</p></div><div class="panel-footer">' + assigneeString + '</div></div>';
 	$('#backlogWell').append(cardHtml);
 	$('.card').draggable({
 		containment: '.container-fluid',
@@ -144,6 +154,23 @@ function createCard(card) {
 		snapMode: 'inner',
 		cursor: 'move',
 		revert: true
+	});
+}
+
+function sendEmailToAssignees(card) {
+	$.ajax({
+			type: 'POST',
+			data: JSON.stringify(card),
+			contentType: 'application/json',
+			dataType: 'json',
+			url: '/emailAssignees',
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(error) {
+					$('#errorText').html(error.message);
+					$('#errorMsg').show();
+			 }
 	});
 }
 
@@ -159,8 +186,9 @@ function addCard(cardDict) {
 				createCard(card);
 				$('#card-title').val('');
 				$('#card-description').val('');
-				$('#card-author').val('');
-				$('#card-authoremail').val('');
+				$('#card-assignee').val('');
+				$('#card-assigneeemail').val('');
+				sendEmailToAssignees(card);
 			},
 			error: function(error) {
 					$('#errorText').html(error.message);
@@ -227,15 +255,35 @@ $(document).ready(function() {
 	$('#saveButton').on('click', function(event) {
 		event.preventDefault();
 		$('#newCardModal').modal('toggle');
-		if ($.trim($('#card-title').val()).length > 0 && $.trim($('#card-description').val()).length > 0 && $.trim($('#card-author').val()).length > 0 && $.trim($('#card-authoremail').val()).length > 0) {
-			var card = {
-				"title" : $('#card-title').val(),
-				"description" : $('#card-description').val(),
-				"author": $('#card-author').val(),
-				"authorEmail" : $('#card-authoremail').val()
-			};
-			console.log('VALID INPUT - CARD: ' + JSON.stringify(card));
-			addCard(card);
+		if ($.trim($('#card-title').val()).length > 0 && $.trim($('#card-description').val()).length > 0 && $.trim($('#card-assignee').val()).length > 0 && $.trim($('#card-assigneeemail').val()).length > 0) {
+			var cardAssigneeList;
+			if ($('#card-assignee').val().indexOf(',')) {
+				cardAssigneeList = $('#card-assignee').val().split(',');
+			} else {
+				cardAssigneeList = [$('#card-assignee').val()];
+			}
+
+			var cardAssigneeEmailList;
+			if ($('#card-assigneeemail').val().indexOf(',')) {
+				cardAssigneeEmailList = $('#card-assigneeemail').val().split(',');
+			} else {
+				cardAssigneeEmailList = [$('#card-assigneeemail').val()];
+			}
+
+			if (cardAssigneeList.length == cardAssigneeEmailList.length) {
+				var card = {
+					"title" : $('#card-title').val(),
+					"description" : $('#card-description').val(),
+					"assignees": cardAssigneeList,
+					"assigneeEmails" : cardAssigneeEmailList
+				};
+				console.log('VALID INPUT - CARD: ' + JSON.stringify(card));
+				addCard(card);
+			} else {
+				console.log('INVALID INPUT');
+				$('#errorText').html('Include emails for all assignees');
+				$('#errorMsg').show();
+			}
 		} else {
 			console.log('INVALID INPUT');
 			$('#errorText').html('You\'ve input invalid data for this card. Please fix the information and try again.');

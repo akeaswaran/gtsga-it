@@ -5,5 +5,4 @@ module.exports = function(app) {
     app.post('/cards', cards.add);
     app.put('/cards/:id', cards.update);
     app.delete('/cards/:id', cards.delete);
-    app.get('/import', cards.import);
 }

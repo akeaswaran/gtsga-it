@@ -4,8 +4,8 @@ Schema = mongoose.Schema;
 var CardSchema = new Schema({
   title: String,
   description: String,
-  author: String,
-  authorEmail: String
+  assignees: Array,
+  assigneeEmails: Array
 });
 
 mongoose.model('Card', CardSchema);

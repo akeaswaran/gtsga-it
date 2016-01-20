@@ -7,18 +7,6 @@ exports.findAll = function(req, res){
   });
 };
 
-exports.import = function(req, res){
-  Card.create(
-    { 'title': 'TEST A', 'description': 'test'},
-    { 'title': 'TEST B','description': 'test'},
-    { 'title': 'TEST C', 'description': 'test'},
-    { 'title': 'TEST D', 'description': 'test'}
-  , function (err) {
-      if (err) return console.log(err);
-      return res.send(202);
-  });
-};
-
 exports.findById = function(req, res) {
   var id = req.params.id;
   Card.findOne({'_id' : id}, function(error, result) {
