@@ -25,7 +25,6 @@ exports.add = function(req, res) {
 exports.update = function(req, res) {
   var id = req.params.id;
   var updates = req.body;
-
   Card.update({'_id' : id}, updates,
     function (err, numberAffected) {
       if (err) return console.log(err);

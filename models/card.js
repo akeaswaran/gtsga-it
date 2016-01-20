@@ -5,7 +5,8 @@ var CardSchema = new Schema({
   title: String,
   description: String,
   assignees: Array,
-  assigneeEmails: Array
+  assigneeEmails: Array,
+  status: String
 });
 
 mongoose.model('Card', CardSchema);
