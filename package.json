@@ -1,7 +1,7 @@
 {
   "name": "gtsga-projectqueue",
   "version": "0.0.2",
-  "description": "A JSON API backend to manage Georgia Tech's SGA IT Committee's project backlog.",
+  "description": "A simple web app to manage Georgia Tech's SGA IT Committee's project backlog.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/akeaswaran/gtsga-projectqueue"
+    "url": "https://github.com/akeaswaran/gtsga-it"
   },
   "dependencies": {
     "body-parser": "^1.14.2",
