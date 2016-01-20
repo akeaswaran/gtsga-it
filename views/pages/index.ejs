@@ -34,7 +34,7 @@
 			$.ajax({
 			  type: "DELETE",
 			  url: 'https://gtsga-it.herokuapp.com/cards',
-			  data: cardId,
+			  data: $.param(cardId),
 				dataType: 'json',
 				error: function(jqXHR, textStatus, errorThrown) {
 					//show error message
@@ -69,10 +69,10 @@
 		$.ajax({
 		  type: "POST",
 		  url: 'https://gtsga-it.herokuapp.com/cards',
-		  data: {
+		  data: $.param({
 				title: cardDict.title,
 				description: cardDict.description
-			},
+			}),
 			dataType: 'json',
 			error: function(jqXHR, textStatus, errorThrown) {
 				//show error message
