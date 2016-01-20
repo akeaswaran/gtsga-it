@@ -89,7 +89,7 @@
 		}).done(function(data) {
 			console.log('DONE ADD W\/ data: ' + data);
 		});*/
-		$.post('https://gtsga-it.herokuapp.com/cards', cardDict,
+		$.post('https://gtsga-it.herokuapp.com/cards', $.param(cardDict),
     	function(data) {
 				console.log('CREATING HTML CARD');
 				var card = data;
