@@ -1,7 +1,7 @@
 {
   "name": "Georgia Tech To-Do",
   "description": "A JIRA clone to manage Georgia Tech's SGA IT Committee's project backlog",
-  "repository": "https://github.com/akeaswaran/cfb-scoreboard-api",
+  "repository": "https://github.com/akeaswaran/gtsga-it",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["georgia tech", "gt", "todo"],
   "image": "heroku/nodejs",
