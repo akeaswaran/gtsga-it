@@ -69,7 +69,10 @@
 		$.ajax({
 		  type: "POST",
 		  url: 'https://gtsga-it.herokuapp.com/cards',
-		  data: JSON.stringify(cardDict),
+		  data: {
+				title: cardDict.title,
+				description: cardDict.description
+			},
 			dataType: 'json',
 			error: function(jqXHR, textStatus, errorThrown) {
 				//show error message
@@ -137,7 +140,10 @@
     $('#saveButton').on('click', function(event) {
 			event.preventDefault();
       $('#newCardModal').modal('toggle');
-			var card = {'[0].Key' : 'title', '[0].Value' : 'IT-' + numCards + ': ' + $('#card-title').val(),'[1].Key' : 'description', '[1].Value' : $('#card-description').val()};
+			var card = {
+				title : 'IT-' + numCards + ': ' + $('#card-title').val(),
+				description : $('#card-description').val()
+			};
 			addCard(card);
     });
   });
