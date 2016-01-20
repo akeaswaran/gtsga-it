@@ -4,8 +4,7 @@
   "description": "A simple web app to manage Georgia Tech's SGA IT Committee's project backlog.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev-start": "mongod && node server.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": "0.12.7"
