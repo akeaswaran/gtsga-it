@@ -40,7 +40,7 @@ app.post('/emailAssignees', function(request, response) {
   var emailData = {
     to: emailAddresses,
     from: "Akshay Easwaran <akeaswaran@gatech.edu>",
-    subject: 'SGA IT Card Updated | ' + card.title,
+    subject: 'SGA IT Card Assigned | ' + card.title,
     html: emailHTML
   };
 
