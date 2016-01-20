@@ -66,8 +66,9 @@
 
 	function addCard(cardDict) {
 		console.log('START ADD');
-		/*$.ajax({
+		$.ajax({
 		  type: "POST",
+			contentType: "application/json",
 		  url: 'https://gtsga-it.herokuapp.com/cards',
 		  data: JSON.stringify({
 				title: cardDict.title,
@@ -88,17 +89,7 @@
 			}
 		}).done(function(data) {
 			console.log('DONE ADD W\/ data: ' + data);
-		});*/
-		$.post('https://gtsga-it.herokuapp.com/cards', $.param(cardDict),
-    	function(data) {
-				console.log('CREATING HTML CARD');
-				var card = data;
-				console.log(card)
-				createCard(card);
-				$('#card-title').val('');
-				$('#card-description').val('');
-			}
-		);
+		});
 	}
 
   $(document).ready(function() {
