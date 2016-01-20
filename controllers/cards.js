@@ -28,7 +28,8 @@ exports.findById = function(req, res) {
 };
 
 exports.add = function(req, res) {
-  Card.create(req.body, function (err, card) {
+  console.log('REQ BODY: ' + req.body);
+  Card.create({'title' : req.body.title, 'description' : req.body.description}, function (err, card) {
     if (err) return console.log(err);
     return res.send(card);
   });
