@@ -37,6 +37,7 @@
 					data: JSON.stringify({'id' : cardId}),
 					contentType: 'application/json',
 					dataType: 'json',
+					traditional: true,
 					url: 'https://gtsga-it.herokuapp.com/cards',
 					success: function(data) {
 							console.log('success at delete');
@@ -76,9 +77,10 @@
 
 		$.ajax({
         type: 'POST',
-        data: JSON.stringify(cardDict),
+        data: cardDict,
         contentType: 'application/json',
         dataType: 'json',
+				traditional: true,
         url: 'https://gtsga-it.herokuapp.com/cards',
         success: function(data) {
             console.log('success at post');
