@@ -28,8 +28,7 @@ exports.findById = function(req, res) {
 };
 
 exports.add = function(req, res) {
-  console.log('REQ BODY: ' + req.body + ' REQ PARAMS: ' + req.params);
-  Card.create({'title' : req.body.title, 'description' : req.body.description}, function (err, card) {
+  Card.create(req.body, function (err, card) {
     if (err) return console.log(err);
     return res.send(card);
   });
@@ -47,7 +46,7 @@ exports.update = function(req, res) {
   });
 }
 
-exports.delete = function(req, res){
+exports.delete = function(req, res) {
   var id = req.params.id;
   Card.remove({'_id':id},function(result) {
     return res.send(result);

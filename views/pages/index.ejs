@@ -25,33 +25,34 @@
   <script src="lib/jquery-ui/jquery-ui.min.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script>
-	function deleteCard(element, cardId) {
+	function deleteCard(cardId) {
 		if(confirm('Do you want to delete this card?')) {
-			/*
-			var card = data;
-			$('#card-' + card.id).remove();
-			*/
-
+			//var cardId = $(element).id;
+			console.log(cardId);
 			$.ajax({
 					type: 'DELETE',
-					data: JSON.stringify({'id' : cardId}),
 					contentType: 'application/json',
 					dataType: 'json',
-					traditional: true,
-					url: 'https://gtsga-it.herokuapp.com/cards',
+					url: '/cards/' + cardId,
 					success: function(data) {
-							console.log('success at delete');
-							console.log(JSON.stringify(data));
+						var card = data;
+						$('#card-' + cardId).remove();
 					},
 					error: function(error) {
-							console.log("some error in fetching the notifications");
+						if (error.status != 200) {
+							console.log("some error in fetching the notifications ERROR: " + JSON.stringify(error));
+						} else {
+							$('#card-' + cardId).remove();
+						}
 					 }
 			});
 		}
 	}
 
 	function createCard(card) {
-		var cardHtml = '<div id="card-' + card.id + '" class="panel panel-default card backlog"><div class="panel-body"><button type="button" class="btn btn-danger btn-xs pull-right card-button" onClick=\"deleteCard(this, \'' + card.id + '\')\"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button><h3>' + card.title + '</h3><p>' + card.description + '</p></div></div>';
+		var deleteString = 'deleteCard(\'' + card._id + '\')';
+		console.log(deleteString);
+		var cardHtml = '<div id="card-' + card._id + '" class="panel panel-default card backlog"><div class="panel-body">  <button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button><h3>' + card.title + '</h3><p>' + card.description + '</p></div></div>';
 		$('#backlogWell').append(cardHtml);
 		$('.card').draggable({
 			containment: '.container-fluid',
@@ -66,25 +67,19 @@
 
 	function addCard(cardDict) {
 		console.log('START ADD');
-		/*
-		console.log('CREATING HTML CARD');
-		var card = data;
-		console.log(card)
-		createCard(card);
-		$('#card-title').val('');
-		$('#card-description').val('');
-		*/
-
 		$.ajax({
         type: 'POST',
-        data: cardDict,
+        data: JSON.stringify(cardDict),
         contentType: 'application/json',
         dataType: 'json',
-				traditional: true,
-        url: 'https://gtsga-it.herokuapp.com/cards',
+        url: '/cards',
         success: function(data) {
-            console.log('success at post');
-            console.log(JSON.stringify(data));
+					console.log('CREATING HTML CARD');
+					var card = data;
+					console.log(card)
+					createCard(card);
+					$('#card-title').val('');
+					$('#card-description').val('');
         },
         error: function(error) {
             console.log("some error in fetching the notifications");
@@ -94,7 +89,7 @@
 
   $(document).ready(function() {
 		var numCards = 0;
-		$.get('https://gtsga-it.herokuapp.com/cards/', function(data) {
+		$.get('/cards', function(data) {
 			numCards = data.length;
 			for (var i = 0; i < data.length; i++) {
 				var card = data[i];
@@ -142,8 +137,8 @@
 			event.preventDefault();
       $('#newCardModal').modal('toggle');
 			var card = {
-				title : 'IT-' + numCards + ': ' + $('#card-title').val(),
-				description : $('#card-description').val()
+				"title" : "IT-" + numCards + ": " + $('#card-title').val(),
+				"description" : $('#card-description').val()
 			};
 			addCard(card);
     });

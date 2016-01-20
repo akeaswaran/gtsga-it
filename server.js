@@ -1,5 +1,6 @@
 var express = require('express'),
 mongoose = require('mongoose'),
+bodyParser = require('body-parser'),
 fs = require('fs');
 
 var mongoUri =
@@ -21,6 +22,9 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.get('/', function(request, response) {
   response.render('pages/index');
