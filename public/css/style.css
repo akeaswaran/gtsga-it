@@ -6,6 +6,10 @@ h1 {
   border-color: #808080;
 }
 
+.page-header small {
+  color: #808080;
+}
+
 .header-button {
   display: inline-block;
   margin-top: 10px;
