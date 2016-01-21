@@ -1,0 +1,83 @@
+h1 {
+  display: inline-block;
+}
+
+.page-header {
+  border-color: #808080;
+}
+
+.header-button {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+button > .card-button {
+  color: gray;
+}
+
+body {
+  background: #262626;
+}
+
+.well {
+  background: #545454;
+  border-color: #545454;
+}
+
+.card {
+  background: #EEEEEE;
+}
+
+.web-title, .well-title, .modal-body label, .modal-header {
+  color: #EEE;
+}
+
+.cardButton {
+  background: #eeb211;
+  border-color: #eeb211;
+  color: #262626;
+}
+
+.cardButton:hover {
+  background: #FFE08B;
+  border-color: #FFE08B;
+  color: #262626;
+}
+
+.modal-body, .modal-header, .modal-footer {
+  background: #262626;
+  border-color: #808080;
+}
+
+a {
+  color: #eeb211;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FFE08B;
+  text-decoration: none;
+}
+
+.cancel {
+  background: #545454;
+  border-color: #545454;
+  color: #EEE;
+}
+
+.cancel:hover {
+  background: #808080;
+  border-color: #808080;
+  color: #EEE;
+}
+
+.modal-body input, .modal-body textarea, .modal-body input:focus, .modal-body textarea:focus {
+  color: #EEE;
+  background: #808080;
+  border-color: #808080;
+}
+
+.modal-body input[placeholder], .modal-body textarea[placeholder] {
+  background: #545454;
+  border-color: #545454;
+}
