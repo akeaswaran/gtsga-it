@@ -13,12 +13,12 @@
 <body>
 	<a name="top"></a>
   <div class="container-fluid">
-    <div class="modal fade" id="newCardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="newCardModal" tabindex="-1" role="dialog" aria-labelledby="newCardLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">New Card</h4>
+            <h4 class="modal-title" id="newCardLabel">New Card</h4>
           </div>
           <div class="modal-body">
             <form id="newCardForm">
@@ -36,10 +36,16 @@
 							 <p class="help-block">Include a comma-separated list of those who are working on this card.</p>
              </div>
 						 <div class="form-group">
-               <label for="card-assigneeemail" class="control-label">Assignee Emails</label>
-               <input type="email" class="form-control" id="card-assigneeemail" placeholder="gpb27@gatech.edu" required>
+               <label for="card-assigneeEmail" class="control-label">Assignee Emails</label>
+               <input type="email" class="form-control" id="card-assigneeEmail" placeholder="gpb27@gatech.edu" required>
 							 <p class="help-block">Include a comma-separated list of the emails of those who are working on this card.</p>
              </div>
+						 <div class="form-group">
+							 <div class="checkbox">
+								 <label><input type="checkbox" value="" id="card-notificationsEnabled"> Enable Email Notifications</label>
+							 </div>
+							 <p class="help-block">If selected, assignees will be emailed whenever there is a change in card status.</p>
+						 </div>
            </form>
           </div>
           <div class="modal-footer">
@@ -89,7 +95,7 @@
 	<footer class="bd-footer text-muted" style="text-align:center;padding-bottom:20px;" role="contentinfo">
 		<div class="container">
 			<p>Built by <a id="github" href="https://github.com/akeaswaran">@akeaswaran</a>.</p>
-			<p>Currently v0.0.4. Code licensed <a id="license" href="https://github.com/akeaswaran/gtsga-it/blob/master/LICENSE.md">MIT</a>.</p>
+			<p>Currently v0.0.5. Code licensed <a id="license" href="https://github.com/akeaswaran/gtsga-it/blob/master/LICENSE.md">MIT</a>.</p>
 			<a href="#top" style="text-align:right;">Back to top</a>
 		</div>
 	</footer>

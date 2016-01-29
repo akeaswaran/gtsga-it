@@ -6,10 +6,9 @@ function findCard(cards, cardId) {
 		if (curCard._id === cardId) {
 			card = curCard;
 			console.log(JSON.stringify(card));
-			return card; //break;
+			return card;
 		}
 	}
-	//return card;
 }
 
 function deleteCard(cardId) {
@@ -135,7 +134,7 @@ function addCard(cardDict) {
 				$('#card-title').val('');
 				$('#card-description').val('');
 				$('#card-assignee').val('');
-				$('#card-assigneeemail').val('');
+				$('#card-assigneeEmail').val('');
 				sendEmailToAssignees(card);
 			},
 			error: function(error) {
@@ -211,7 +210,7 @@ $(document).ready(function() {
 	$('#saveButton').on('click', function(event) {
 		event.preventDefault();
 		$('#newCardModal').modal('toggle');
-		if ($.trim($('#card-title').val()).length > 0 && $.trim($('#card-description').val()).length > 0 && $.trim($('#card-assignee').val()).length > 0 && $.trim($('#card-assigneeemail').val()).length > 0) {
+		if ($.trim($('#card-title').val()).length > 0 && $.trim($('#card-description').val()).length > 0 && $.trim($('#card-assignee').val()).length > 0 && $.trim($('#card-assigneeEmail').val()).length > 0) {
 			var cardAssigneeList;
 			if ($('#card-assignee').val().indexOf(',')) {
 				cardAssigneeList = $('#card-assignee').val().split(',');
@@ -220,10 +219,10 @@ $(document).ready(function() {
 			}
 
 			var cardAssigneeEmailList;
-			if ($('#card-assigneeemail').val().indexOf(',')) {
-				cardAssigneeEmailList = $('#card-assigneeemail').val().split(',');
+			if ($('#card-assigneeEmail').val().indexOf(',')) {
+				cardAssigneeEmailList = $('#card-assigneeEmail').val().split(',');
 			} else {
-				cardAssigneeEmailList = [$('#card-assigneeemail').val()];
+				cardAssigneeEmailList = [$('#card-assigneeEmail').val()];
 			}
 
 			if (cardAssigneeList.length == cardAssigneeEmailList.length) {
@@ -232,7 +231,8 @@ $(document).ready(function() {
 					"description" : $('#card-description').val(),
 					"assignees": cardAssigneeList,
 					"assigneeEmails" : cardAssigneeEmailList,
-					"status" : "backlog"
+					"status" : "backlog",
+					"notificationsEnabled" : $('#card-notificationsEnabled').val()
 				};
 				console.log('VALID INPUT - CARD: ' + JSON.stringify(card));
 				addCard(card);

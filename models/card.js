@@ -6,7 +6,8 @@ var CardSchema = new Schema({
   description: String,
   assignees: Array,
   assigneeEmails: Array,
-  status: String
+  status: String,
+  notificationsEnabled:  Boolean,
 });
 
 mongoose.model('Card', CardSchema);
