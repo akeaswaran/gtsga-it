@@ -38,6 +38,12 @@ function createCard(card) {
 	var deleteString = 'deleteCard(\'' + card._id + '\')';
 	var assignees = card.assignees;
 	var emails = card.assigneeEmails;
+	var priority = card.priority;
+	var priorityString = '';
+	for (var j = 1; j <= card.priority; j++) {
+		priorityString = priorityString + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
+	}
+
 	var assigneeString = 'assigned to <a href=\"mailto:' + card.assigneeEmails[0] + '\">' + card.assignees[0] + '</a>';
 	if (assignees.length > 2) {
 		for (var i = 1; i < assignees.length; i++) {
@@ -61,7 +67,7 @@ function createCard(card) {
 		statusString = 'success';
 	}
 
-	var cardHtml = '<div id="card-' + card._id + '" class="panel panel-' + statusString + ' card ' + card.status + '"><div class="panel-heading">' + card.title + '<button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><p>' + card.description + '</p></div><div class="panel-footer">' + assigneeString + '</div></div>';
+	var cardHtml = '<div id="card-' + card._id + '" class="panel panel-' + statusString + ' card ' + card.status + '"><div class="panel-heading">' + card.title + ' ' + priorityString + '<button type="button" class="close" onClick="' + deleteString + '" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><p>' + card.description + '</p></div><div class="panel-footer">' + assigneeString + '</div></div>';
 	if (card.status === 'backlog') {
 		$('#backlogWell').append(cardHtml);
 	} else if (card.status === 'in-progress') {
@@ -135,6 +141,7 @@ function addCard(cardDict) {
 				$('#card-description').val('');
 				$('#card-assignee').val('');
 				$('#card-assigneeEmail').val('');
+				$('#card-priority').val('');
 				sendEmailToAssignees(card);
 			},
 			error: function(error) {
@@ -144,11 +151,22 @@ function addCard(cardDict) {
 	});
 }
 
+function compare(card1, card2) {
+	if (card1.priority < card2.priority) {
+		return -1;
+	} else if (card1.priority > card2.priority) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 $(document).ready(function() {
 	var numCards = 0;
 	var cards = [];
 	$.get('/cards', function(data) {
 		numCards = data.length;
+		numCards.sort = compare;
 		for (var i = 0; i < data.length; i++) {
 			var card = data[i];
 			cards.push(card);
@@ -232,6 +250,7 @@ $(document).ready(function() {
 					"assignees": cardAssigneeList,
 					"assigneeEmails" : cardAssigneeEmailList,
 					"status" : "backlog",
+					"priority" : parseInt($('#card-priority').val()),
 					"notificationsEnabled" : $('#card-notificationsEnabled').val()
 				};
 				console.log('VALID INPUT - CARD: ' + JSON.stringify(card));

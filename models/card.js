@@ -8,6 +8,7 @@ var CardSchema = new Schema({
   assigneeEmails: Array,
   status: String,
   notificationsEnabled:  Boolean,
+  priority: Number
 });
 
 mongoose.model('Card', CardSchema);

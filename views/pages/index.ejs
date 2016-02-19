@@ -41,6 +41,11 @@
 							 <p class="help-block">Include a comma-separated list of the emails of those who are working on this card.</p>
              </div>
 						 <div class="form-group">
+               <label for="card-priority" class="control-label">Priority</label>
+               <input type="number" class="form-control" id="card-priority" min="1" max="4" default="4" required>
+							 <p class="help-block">Mark the priority of this card. 1 represents lowest priority; 4 represents highest.</p>
+             </div>
+						 <div class="form-group">
 							 <div class="checkbox">
 								 <label><input type="checkbox" value="" id="card-notificationsEnabled"> Enable Email Notifications</label>
 							 </div>
