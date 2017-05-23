@@ -4,7 +4,9 @@
   "description": "A simple web app to manage Georgia Tech's SGA IT Committee's project backlog.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "engines": {
     "node": "0.12.7"
@@ -17,8 +19,10 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "ejs": "2.5.5",
-    "express": "4.15.2",
+    "express": "4.15.3",
     "mongoose": "^4.3.6",
-    "sendgrid": "^2.0.0"
-  }
+    "sendgrid": "^2.0.0",
+    "snyk": "^1.30.1"
+  },
+  "snyk": true
 }
